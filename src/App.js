@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import BusinessList from '././components/BusinessList/BusinessList';
+import {SearchBar, searchYelp} from '././components/SearchBar/SearchBar';
+import React, {useState, useEffect} from 'react'
+
 
 function App() {
+
+  let [arr, setArr] = useState([]);
+
+  async function getArr(term, location, sortBy){
+    let newArr = await searchYelp(term,location,sortBy)
+    setArr(()=>newArr)
+    
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>ReddyMeals</h1>
+      <SearchBar getArr={getArr} />
+      <BusinessList businesses={arr}/>
     </div>
   );
 }
